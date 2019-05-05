@@ -2,6 +2,10 @@ def max(a,b):
     if a>b: return a
     else: return b
 
+def min(a,b):
+    if a>b: return b
+    else: return a
+
 def fixcolor(color):
     a = [color.r,color.g,color.b]
     for i in range(len(a)):
@@ -61,10 +65,10 @@ class Color:
         return fixcolor(Color(int(self.r*other),int(self.g*other),int(self.b*other)))
     
     def __add__(self,other):
-        return fixcolor(Color(self.r+other.r,self.g+other.g,self.b+other.b))
+        return Color((self.r+other.r)//2,(self.g+other.g)//2,(self.b+other.b)//2)
 
     def __sub__(self,other):
-        return fixcolor(Color(self.r-other.r,self.g-other.g,self.b-other.b))
+        return Color((self.r-other.r)//2,(self.g-other.g)//2,(self.b-other.b)//2)
 
     def __str__(self):
         return str(self.r)+' '+str(self.g)+' '+str(self.b)
@@ -106,3 +110,4 @@ blue = Color(0, 0, 255)
 black = Color(0, 0, 0)
 white = Color(255, 255, 255)
 gray = Color(125, 125, 125)
+yellow = Color(255,255,0)

@@ -4,10 +4,14 @@ H = 600  # height of photo
 W = 600  # width of photo
 D = 600  # depth of photo
 
-light = Sphere(Vector(W,H,300),1,white)
+light = Sphere(Vector(0,0,D//2),1,white)
+intensity = 1.5
 backgrond = black  # bg color
 
-redball = Sphere(Vector(W/2, H/2, 0), 200, red)
+objectlist = []
+
+objectlist.append(Sphere(Vector(W//4, H//4, 100), W//6, red))
+#objectlist.append(Sphere(Vector(3*W//4, 3*H//4, 100), W//6, blue))
 
 photopath = 'p.ppm'  # output file path
 photo = open(photopath, 'w')
@@ -21,14 +25,15 @@ for i in range(W):
 		o=Vector(j, i, 0)
 		d=Vector(0, 0, 1)
 		ray=Ray(o, d)
-		hit, point = redball.intersect(ray)
-		if hit:
-			pi = o+d*point
-			L = light.center - pi
-			N = redball.getNormal(pi)
-			dt = L.normalize() * N.normalize()
-			photo.write(str(redball.color+ (light.color*dt*2) )+'\n')
-		else:
-			photo.write(str(backgrond)+'\n')
+		for obj in objectlist:
+			hit, point = obj.intersect(ray)
+			if hit:
+				pi = o+d*point
+				L = light.center - pi
+				N = obj.getNormal(pi)
+				dt = L.normalize() * N.normalize()
+				photo.write(str(obj.color + (light.color*dt*intensity) )+'\n')
+			else:
+				photo.write(str(backgrond)+'\n')
 
 photo.close()
