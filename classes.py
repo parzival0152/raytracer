@@ -15,6 +15,16 @@ def fixcolor(color):
             a[i] = 0
     return Color(a[0],a[1],a[2])
 
+def closesthit(hits):
+    maxdis = 100000
+    color = str(black)+'\n'
+    for hit in hits:
+        if hit[1]<maxdis:
+            maxdis = hit[1]
+            color = hit[0]
+    return color
+
+
 class Vector:
     """Vector basic library"""
     def __init__(self,x=0,y=0,z=0):
